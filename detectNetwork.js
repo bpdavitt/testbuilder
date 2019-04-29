@@ -18,6 +18,8 @@ var detectNetwork = function(cardNumber) {
   // Once you've read this, go ahead and try to implement this function, then return to the console.
   //China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 
   //and a length of 16-19.
+  // Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 
+  // and a length of 16, 18, or 19.
 
   var visaLengths = [13,16,19];
   var masterPrefix = ['51','52','53','54','55']
@@ -25,7 +27,8 @@ var detectNetwork = function(cardNumber) {
   var discoverLengths = [16, 19]
   var maestroPrefix = ['5018', '5020', '5038', '6304']
   var maestroLengths = [12, 13, 14, 15, 16, 17, 18, 19]
-
+  var switchPrefix = ['4903', '4905', '4911', '4936', '6333', '6759', '564182', '633110']
+  var switchLengths = [16, 18, 19]
 
   if ((cardNumber.substr(0,2) === '38' ||  cardNumber.substr(0,2) === '39') && cardNumber.length === 14) {
   	return 'Diner\'s Club'
@@ -33,7 +36,7 @@ var detectNetwork = function(cardNumber) {
   if ((cardNumber.substr(0,2) === '34' ||  cardNumber.substr(0,2) === '37') && cardNumber.length === 15) {
   	return 'American Express'
   } 
-  if (cardNumber.substr(0,1) === '4' && visaLengths.includes(cardNumber.length)){
+  if (cardNumber.substr(0,1) === '4' && visaLengths.includes(cardNumber.length) && !switchPrefix.includes(cardNumber.substr(0,4))){
   	return 'Visa'
   } 
   if (masterPrefix.includes(cardNumber.substr(0,2)) && cardNumber.length === 16){
@@ -42,7 +45,7 @@ var detectNetwork = function(cardNumber) {
 
   for (elements of discoverPrefix){
   	if(cardNumber.indexOf(elements) === 0  && discoverLengths.includes(cardNumber.length)){
-  		return 'Discover'
+  	  return 'Discover'
   	}
   }
 
@@ -59,6 +62,12 @@ var detectNetwork = function(cardNumber) {
   for (elements of chinaPrefix){
   	if(cardNumber.indexOf(elements) === 0  && chinaLengths.includes(cardNumber.length)){
   		return 'China UnionPay'
+  	}
+  }
+
+  for (elements of switchPrefix){
+  	if(cardNumber.indexOf(elements) === 0  && switchLengths.includes(cardNumber.length)){
+  		return 'Switch'
   	}
   }
 

@@ -217,7 +217,7 @@ describe('should support China UnionPay', function(){
   for (var prefix = 622126; prefix <= 622925; prefix++) { 
     for(var length = 16; length <= 19; length ++ ){
       var suffix = '';
-      for(var suff = length - 4; suff > 0; suff -- ){
+      for(var suff = length - 6; suff > 0; suff -- ){
         suffix = suffix + '1';
       }
       (function(prefix,length,suffix) {    
@@ -231,7 +231,7 @@ describe('should support China UnionPay', function(){
   for (var prefix = 624; prefix <= 626; prefix++) { 
     for(var length = 16; length <= 19; length ++ ){
       var suffix = '';
-      for(var suff = length - 4; suff > 0; suff -- ){
+      for(var suff = length - 3; suff > 0; suff -- ){
         suffix = suffix + '1';
       }
       (function(prefix,length,suffix) {    
@@ -259,8 +259,19 @@ describe('should support China UnionPay', function(){
 describe('should support Switch', function(){
 //Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759
 //and a length of 16, 18, or 19.
-//Switch and Visa seem to have some overlapping card numbers - 
+//Switch and Visa seem to have some overlapping card numbers - [4]
 //in any apparent conflict, you should choose the network with the longer prefix.
-var  should = chai.should();
+  var  should = chai.should();
+  var  switchPrefix = ['4903', '4905', '4911', '4936', '6333', '6759', '564182', '633110']
+  var  switchLengths = [16, 18, 19]
 
+  for(var prefix = 0; prefix < switchPrefix.length; prefix++){
+    for(var length = 0; length < switchLengths.length; length++){
+      (function(prefix,length){
+        it('has a prefix of ' + switchPrefix[prefix] + ' and a length of ' + switchLengths[length], function(){ 
+          detectNetwork(switchPrefix[prefix].padEnd(switchLengths[length],'1')).should.equal('Switch')
+        });
+      })(prefix,length)
+    }
+  }
 })
