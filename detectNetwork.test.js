@@ -159,20 +159,20 @@ describe('Discover', function() {
   for (var prefix = 644; prefix <= 649; prefix++) {
     (function(prefix) {    
       it('has a prefix of ' + prefix + ' and a length of 16', function(){
-        detectNetwork(prefix + '1234567890123').should.equal('Discover')
+        detectNetwork(prefix.toString().padEnd(16, '1')).should.equal('Discover')
       });    
       it('has a prefix of ' + prefix + ' and a length of 19', function(){
-        detectNetwork(prefix + '1849382746578392').should.equal('Discover')
+        detectNetwork(prefix.toString().padEnd(19, '1')).should.equal('Discover')
       }); 
     })(prefix)
   }
 
   it('has a prefix of 65 and a length of 16', function(){
-    detectNetwork('6548759845723154').should.equal('Discover');
+    detectNetwork('65'.padEnd(16, '1')).should.equal('Discover');
   });
 
   it('has a prefix of 65 and a length of 19', function(){
-    detectNetwork('6548759845723154748').should.equal('Discover');
+    detectNetwork('65'.padEnd(19, '1')).should.equal('Discover');
   });
 
 });
@@ -184,27 +184,23 @@ describe('Maestro', function() {
 
 
   for (var length = 12; length <= 19; length++) {
-      var suffix = '';
-      for(var suff = length - 4; suff > 0; suff -- ){
-        suffix = suffix + '1';
-      }
-      (function(length, suffix) {    
+      (function(length) {    
         it('has a prefix of 5018 and a length of ' + length, function(){
-          detectNetwork('5018' + suffix).should.equal('Maestro')
+          detectNetwork('5018'.padEnd(length, '1')).should.equal('Maestro')
         });    
        
         it('has a prefix of 5020 and a length of ' + length, function(){
-          detectNetwork('5020' + suffix).should.equal('Maestro')
+          detectNetwork('5020'.padEnd(length, '1')).should.equal('Maestro')
         });
      
         it('has a prefix of 5038 and a length of ' + length, function(){
-          detectNetwork('5038' + suffix).should.equal('Maestro')
+          detectNetwork('5038'.padEnd(length, '1')).should.equal('Maestro')
         });  
     
         it('has a prefix of 6304 and a length of ' + length, function(){
-          detectNetwork('6304' + suffix).should.equal('Maestro')
+          detectNetwork('6304'.padEnd(length, '1')).should.equal('Maestro')
         });   
-      })(length, suffix);
+      })(length);
     }
 
 });
@@ -216,43 +212,31 @@ describe('should support China UnionPay', function(){
 
   for (var prefix = 622126; prefix <= 622925; prefix++) { 
     for(var length = 16; length <= 19; length ++ ){
-      var suffix = '';
-      for(var suff = length - 6; suff > 0; suff -- ){
-        suffix = suffix + '1';
-      }
-      (function(prefix,length,suffix) {    
+      (function(prefix,length) {    
         it('has a prefix of ' + prefix + ' and a length of ' + length, function(){
-          detectNetwork(prefix + suffix).should.equal('China UnionPay')
+          detectNetwork(prefix.toString().padEnd(length, '1')).should.equal('China UnionPay')
         });    
-      })(prefix,length,suffix)
+      })(prefix,length)
     }
   }
 
   for (var prefix = 624; prefix <= 626; prefix++) { 
     for(var length = 16; length <= 19; length ++ ){
-      var suffix = '';
-      for(var suff = length - 3; suff > 0; suff -- ){
-        suffix = suffix + '1';
-      }
-      (function(prefix,length,suffix) {    
+      (function(prefix,length) {    
         it('has a prefix of ' + prefix + ' and a length of ' + length, function(){
-          detectNetwork(prefix + suffix).should.equal('China UnionPay')
+          detectNetwork(prefix.toString().padEnd(length, '1')).should.equal('China UnionPay')
         });    
-      })(prefix,length,suffix)
+      })(prefix,length)
     }
   }
 
   for (var prefix = 6282; prefix <= 6288; prefix++) { 
     for(var length = 16; length <= 19; length ++ ){
-      var suffix = '';
-      for(var suff = length - 4; suff > 0; suff -- ){
-        suffix = suffix + '1';
-      }
-      (function(prefix,length,suffix) {    
+      (function(prefix,length) {    
         it('has a prefix of ' + prefix + ' and a length of ' + length, function(){
-          detectNetwork(prefix + suffix).should.equal('China UnionPay')
+          detectNetwork(prefix.toString().padEnd(length, '1')).should.equal('China UnionPay')
         });    
-      })(prefix,length,suffix)
+      })(prefix,length)
     }
   }
 });
